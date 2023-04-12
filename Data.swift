@@ -45,9 +45,22 @@ class Data{
 
     let drinkAndFoodArray: [[String:Int]]
 
+   
+    var icedOnlyMenu: [String]
+    let hotOnlyMenu: [String]
+    let hotOrIced: [String]
+    let sizeOfHot: [String]
+    let sizeOfIced: [String]
+    let sizeOfEspresso: [String]
+    let espressoSizedMenu: [String]
+    
+    let optionOfHotDrink: [String:Int]
+    let optionOfIcedDrink: [String:Int]
+    let optionOfBreadAndSandwich: [String:Int]
+    
     init(){
-        self.hereOrTogo = ["Here", "Togo"]
-        self.category = ["Drink", "Food", "MD"]
+        self.hereOrTogo = ["Here", "To-go"]
+        self.category = ["Drink", "Food", "MD(merchandise)"]
 
         self.drink = ["Refreshers", "Cold Brew", "Blonde Coffee", "Espresso", "Decaf Coffee", "Frappuccino", "Blended", "Fizzio", "Teavana", "Brewed Coffee", "Others", "RTD"]
         self.food = ["Bread", "Cake&Mini Dessert", "Sandwich&Salad", "Hot Food", "Fruit&Yogurt", "Snack", "Ice Cream"]
@@ -76,7 +89,7 @@ class Data{
                              "Blonde Caffe Americano":4500,
                              "The Green Mugwort Cream Latte":7000]
         self.espresso = ["Choux Cream Latte":6300,
-                         "Vanilla Flat White":5900,
+                         "Vanilla Flat White":5900, //hot only
                          "Starbucks Dolce Latte":5900,
                          "Caffe Mocha":5500,
                          "Caffe Americano":4500,
@@ -131,7 +144,7 @@ class Data{
                         "Chai Tea Latte":5500,
                         "Blooming Fruit Y-Tea":8500,
                         "Malcha Tea-Einspanner":6500,
-                        "Malcha Shot Affogato":7000, //iced only
+                        "Malcha Shot Affogato":7000, //iced only, size fixed
                         "Honey Earl Grey Milk Tea":6900,
                         "Jeju Organic Green Tea":5300,
                         "English Breakfast Brewed Tea":4500,
@@ -176,7 +189,7 @@ class Data{
                     "Evian Water":2500,
                     "Perrier Lime":3300,
                     "Organic Sparkling Apple Juice":4800,
-                    "Samdasoo Water":950]
+                    "Samdasoo Water":950] //size fixed(all)
 
         self.bread = ["Potato Onion Cream Cheese Bagel":5900,
                       "Nutty Croissant":4900,
@@ -348,6 +361,45 @@ class Data{
         
         self.drinkAndFoodArray = [self.refreshers, self.coldBrew, self.blondeCoffee, self.espresso, self.decafCoffee, self.frappuccino, self.blended, self.fizzio, self.teavana, self.brewedCoffee, self.others, self.rtd, self.bread, self.cakeMiniDessert, self.sandwichSalad, self.hotFood, self.fruitYogurt, self.snack, self.iceCream]
         
+   
+        
+        self.icedOnlyMenu = ["Iced Brown Sugar Oat Shaken Espresso", "Coffee Starbucks Double Shot", "Vanilla Starbucks Double Shot", "Hazelnut Starbucks Double Shot", "Pink Flower Youthberry Tea", "Malcha Shot Affogato", "Iced Coffee", "Spring Strawberry Milk", "Vanilla Affogato", "Chocolate Affocato", "Java Chip Vanilla Affogato", "Java Chip Chocolate Affogato", "Milk", "Red Power Smasher", "Starbuck Slammer"]
+        
+
+//        for (key, _) in self.refreshers{
+//            self.icedOnlyMenu.append(key)
+//        }
+//        for (key, _) in self.coldBrew{
+//            self.icedOnlyMenu.append(key)
+//        }
+//        for (key, _) in self.frappuccino{
+//            self.icedOnlyMenu.append(key)
+//        }
+//        for (key, _) in self.blended{
+//            self.icedOnlyMenu.append(key)
+//        }
+//        for (key, _) in self.fizzio{
+//            self.icedOnlyMenu.append(key)
+//        }
+        self.icedOnlyMenu += self.refreshers.keys
+        self.icedOnlyMenu += self.coldBrew.keys
+        self.icedOnlyMenu += self.frappuccino.keys
+        self.icedOnlyMenu += self.blended.keys
+        self.icedOnlyMenu += self.fizzio.keys
+        
+        self.hotOnlyMenu = ["Vanilla Flat White", "Espresso", "Espresso Macchiato", "Espresso Con Panna", "Brewed Coffee", "Steamed Milk"]
+        
+        self.hotOrIced = ["Hot", "Iced"]
+        
+        self.sizeOfHot = ["Short", "Tall", "Grande", "Venti"]
+        self.sizeOfIced = ["Tall", "Grande", "Venti"]
+        self.sizeOfEspresso = ["Solo", "Doppio"]
+        
+        self.espressoSizedMenu = ["Espresso", "Espresso Macchiato", "Espresso Con Panna"]
+        
+        self.optionOfHotDrink = ["addEspresso":600, "addSyrup":600, "withWhip":600, "withDrizzle":600]
+        self.optionOfIcedDrink = ["addEspresso":600, "addSyrup":600, "moreIce":0, "withWhip":600, "withDrizzle":600]
+        self.optionOfBreadAndSandwich = ["warm":0]
 //        enum HereOrTogo: String{
 //            case here = "1"
 //            case togo = "2"
