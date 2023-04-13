@@ -17,6 +17,7 @@ class Order{
     var hotOrIced: String?
     var size: String?
     var option: [String:Int]?
+    var number: Int?
     
     init(){
         self.data = Data()
@@ -26,6 +27,7 @@ class Order{
         self.menu = nil
         self.size = nil
         self.option = nil
+        self.number = nil
     }
     
     func start(){
@@ -101,12 +103,18 @@ class Order{
             for index in 0..<tmpArray.count-1{
                 print("\(index+1). \(tmpArray[index])", terminator: " | ")
             }
-            print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | (0. Back)")
+            print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | (0. Back,  99. Go First)")
             let input: String? = readLine()
             
-            if Int(input!) == 0{
+            if input == "0"{
                 self.category = nil
                 self.getCategory()
+                break
+                
+            } else if input == "99"{
+                self.hereOrTogo = nil
+                self.category = nil
+                self.getHereOrTogo()
                 break
                 
             } else if Int(input!)! >= 1 && Int(input!)! <= tmpArray.count{
@@ -135,12 +143,19 @@ class Order{
                     for index in 0..<tmpArray.count-1{
                         print("\(index+1). \(tmpArray[index])", terminator: " | ")
                     }
-                    print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | (0. Back)")
+                    print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | (0. Back, 99. Go First)")
                     let input: String? = readLine()
                     
-                    if Int(input!) == 0{
+                    if input == "0"{
                         self.type = nil
                         self.getType()
+                        break
+                        
+                    } else if input == "99"{
+                        self.hereOrTogo = nil
+                        self.category = nil
+                        self.type = nil
+                        self.getHereOrTogo()
                         break
                         
                     } else if Int(input!)! >= 1 && Int(input!)! <= tmpArray.count{
@@ -187,12 +202,20 @@ class Order{
                 for index in 0..<tmpArray.count-1{
                     print("\(index+1). \(tmpArray[index])", terminator: " | ")
                 }
-                print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | (0. Back)")
+                print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | (0. Back, 99. Go First)")
                 let input: String? = readLine()
                 
-                if Int(input!) == 0{
+                if input == "0"{
                     self.menu = nil
                     self.getMenu()
+                    break
+                    
+                } else if input == "99"{
+                    self.hereOrTogo = nil
+                    self.category = nil
+                    self.type = nil
+                    self.menu = nil
+                    self.getHereOrTogo()
                     break
                     
                 } else if Int(input!)! >= 1 && Int(input!)! <= tmpArray.count{
@@ -232,12 +255,21 @@ class Order{
             for index in 0..<tmpArray.count-1{
                 print("\(index+1). \(tmpArray[index])", terminator: " | ")
             }
-            print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | (0. Back)")
+            print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | (0. Back, 99. Go First)")
             let input: String? = readLine()
             
             if Int(input!) == 0{
                 self.menu = nil
                 self.getMenu()
+                break
+                
+            } else if input == "99"{
+                self.hereOrTogo = nil
+                self.category = nil
+                self.type = nil
+                self.menu = nil
+                self.hotOrIced = nil
+                self.getHereOrTogo()
                 break
                 
             } else if Int(input!)! >= 1 && Int(input!)! <= tmpArray.count{
@@ -252,7 +284,7 @@ class Order{
         }
     }
             
-    func getOption(){
+    func getOption(){ //수정필요
     loop1: while true{
         if self.data.drink.contains(self.type!){
             var tmpArray: [String] = []
@@ -267,7 +299,7 @@ class Order{
                 
             } else {
                 self.option = ["None":0]
-                //변수 모으기, 계산하기
+                self.getNumber()
                 break loop1
             }
             
@@ -276,15 +308,26 @@ class Order{
             for index in 0..<tmpArray.count-1{
                 print("\(index+1). \(tmpArray[index])", terminator: " | ")
             }
-            print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | \(tmpArray.count+1). No Option | (0. Back)")
+            print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | \(tmpArray.count+1). No Option | (0. Back, 99. Go First)")
             let input1: String? = readLine()
             
-            if Int(input1!) == 0{
+            if input1 == "0"{
                 self.size = nil
                 self.getSize()
                 break loop1
                 
+            } else if input1 == "99"{
+                self.hereOrTogo = nil
+                self.category = nil
+                self.type = nil
+                self.menu = nil
+                self.hotOrIced = nil
+                self.size = nil
+                self.getHereOrTogo()
+                break loop1
+                
             } else if Int(input1!) == tmpArray.count+1{
+                self.getNumber()
                 break loop1
                 
             } else if self.hotOrIced == "Iced" && Int(input1!) == 3{
@@ -295,10 +338,11 @@ class Order{
                 print("1. Yes | 2. No")
                 let input2: String? = readLine()
                 
-                if Int(input2!) == 1{
+                if input2 == "1"{
                     break loop3
                     
-                } else if Int(input2!) == 2{
+                } else if input2 == "2"{
+                    self.getNumber()
                     break loop1
                     
                 } else {
@@ -318,10 +362,11 @@ class Order{
                     print("1. Yes | 2. No")
                     let input4: String? = readLine()
                     
-                    if Int(input4!) == 1{
+                    if input4 == "1"{
                         break loop4
                         
-                    } else if Int(input4!) == 2{
+                    } else if input4 == "2"{
+                        self.getNumber()
                         break loop1
                         
                     } else {
@@ -339,25 +384,35 @@ class Order{
             
         loop5: while true{
             print("💬 Do you want me to heat up your \(self.menu!)?")
-            print("1. Yes | 2. No | (0. Back)")
-            let input: String? = readLine()
+            print("1. Yes | 2. No | (0. Back, 99. Go First)")
+            let input5: String? = readLine()
             
-            if Int(input!) == 0{
+            if input5 == "0"{
                 self.size = nil
                 self.getSize()
                 break loop1
                 
-            } else if Int(input!)! == 1{
+            } else if input5 == "99"{
+                self.hereOrTogo = nil
+                self.category = nil
+                self.type = nil
+                self.menu = nil
+                self.hotOrIced = nil
+                self.size = nil
+                self.getHereOrTogo()
+                break loop1
+                
+            } else if input5 == "1"{
                 self.option = ["warm":1]
                 print("💬 Your \(self.size!) is served heated.")
+                self.getNumber()
                 break loop1
-                //변수 모으기, 계산하기
                 
-            } else if Int(input!)! == 2{
+            } else if input5 == "2"{
                 self.option = ["warm":0]
                 print("💬 Your \(self.size!) is served cold.")
+                self.getNumber()
                 break loop1
-                //변수 모으기, 계산하기
                 
             } else {
                 print("⚠️ Please choose between 0 and 2.")
@@ -367,13 +422,53 @@ class Order{
             
             self.option = ["None":0]
             print("💬 Your \(self.size!) has no choice for option.")
+            self.getNumber()
             break loop1
-            //변수 모으기, 계산하기
         }
     }
     }
     
     func getNumber(){
+        while self.number == nil{
+            print("💬 How many would you like to order?")
+            print("You can order under 10. (0. Back, 99. Go First)")
+            let input: String? = readLine()
+            
+            if input == "0"{
+                self.option = nil
+                self.getOption()
+                break
+                
+            } else if input == "99"{
+                self.hereOrTogo = nil
+                self.category = nil
+                self.type = nil
+                self.menu = nil
+                self.hotOrIced = nil
+                self.size = nil
+                self.option = nil
+                self.getHereOrTogo()
+                break
+                
+            } else if Int(input!)! >= 1 && Int(input!)! <= 9{
+                self.number = Int(input!)!
+                print("\(Int(input!)!) \(self.category!) is served.")
+                self.collectOrderInfo()
+                
+            } else {
+                print("⚠️ Please choose between 0 and 9.")
+            }
+        }
+    }
+    
+    func collectOrderInfo(){
+        print("hereOrTogo: \(self.hereOrTogo!)")
+        print("category: \(self.category!)")
+        print("type: \(self.type!)")
+        print("menu: \(self.menu!)")
+        print("size: \(self.size!)")
+        print("option: \(self.option!)")
+        print("number: \(self.number!)")
     }
 }
 //==============================================================================
