@@ -302,7 +302,7 @@ class Order{
                 self.getNumber()
                 break loop1
             }
-            
+            print("loop1 테스트")
         loop2: while true{
             print("💬 Which option would you like to add to your \(self.menu!)?")
             for index in 0..<tmpArray.count-1{
@@ -357,7 +357,7 @@ class Order{
                 let input3: String? = readLine()
                 
                 if Int(input3!)! >= 1 && Int(input3!)! <= 9{
-                    self.option?.updateValue(Int(input3!)!, forKey: tmpArray[tmpArray.count-1])
+                    self.option?.updateValue(Int(input3!)!, forKey: tmpArray[Int(input1!)!-1])
                     print("💬 \(Int(input3!)!) times \(tmpArray[Int(input1!)!-1]) is served. Do you want more option?")
                     print("1. Yes | 2. No")
                     let input4: String? = readLine()
