@@ -20,7 +20,7 @@ class Data{
     
     let drinkAndFood: [String]
     
-    let md: [String]
+//    let md: [String]
     
     let refreshers: [String:Int]
     let coldBrew: [String:Int]
@@ -60,16 +60,19 @@ class Data{
     
     init(){
         self.hereOrTogo = ["Here", "To-go"]
-        self.category = ["Drink", "Food", "MD(merchandise)"]
+        self.category = ["Drink", "Food"]
+        
+//        self.category = ["Drink", "Food", "MD(merchandise)"]
 
         self.drink = ["Refreshers", "Cold Brew", "Blonde Coffee", "Espresso", "Decaf Coffee", "Frappuccino", "Blended", "Fizzio", "Teavana", "Brewed Coffee", "Others", "RTD"]
         self.food = ["Bread", "Cake&Mini Dessert", "Sandwich&Salad", "Hot Food", "Fruit&Yogurt", "Snack", "Ice Cream"]
         
         self.drinkAndFood = self.drink + self.food
         
-        self.md = ["Mug&Glass", "Tumbler", "ACC", "Brewing Item", "Whole Bean", "VIA", "Capsule", "Packaged Tea", "Syrup"]
+//        self.md = ["Mug&Glass", "Tumbler", "ACC", "Brewing Item", "Whole Bean", "VIA", "Capsule", "Packaged Tea", "Syrup"]
         
-        self.categoryArray = [self.drink, self.food, self.md]
+        self.categoryArray = [self.drink, self.food]
+//        self.categoryArray = [self.drink, self.food, self.md]
 
         self.refreshers = ["Strawberry Acai with Lemonade Refresher":5900,
                            "Pink Drink with Strawberry Acai Refresher":5900] //iced only(all)
