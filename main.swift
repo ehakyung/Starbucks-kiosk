@@ -42,6 +42,7 @@ class Order{
         self.cart = Cart(order: self)
         
         while self.hereOrTogo == nil{
+            
             print("💬 For Here Or Togo?")
             for index in 0..<self.data.hereOrTogo.count-1{
                 print("\(index+1). \(self.data.hereOrTogo[index])", terminator: " | ")
@@ -53,22 +54,24 @@ class Order{
                 print("💬 You chose to eat-in.")
                 self.hereOrTogo = self.data.hereOrTogo[0]
                 self.getCategory()
+                break
                 
             } else if input == "2"{
                 print("💬 You chose to take away.")
                 self.hereOrTogo = self.data.hereOrTogo[1]
                 self.getCategory()
+                break
                 
             } else {
                 print("⚠️ Please choose between 0 and 2.")
             }
         }
-
     }
     
     func getCategory(){
-        
+     
         while self.category == nil{
+            
             print("💬 What do you want to order?")
             for index in 0..<self.data.category.count-1{
                 print("\(index+1). \(self.data.category[index])", terminator: " | ")
@@ -86,6 +89,7 @@ class Order{
                 self.category = self.data.category[Int(input!)!-1]
                 print("💬 You chose \(self.category!).")
                 self.getType()
+                break
                 
             } else {
                 print("⚠️ Please choose between 0 and 3.")
@@ -94,8 +98,9 @@ class Order{
     }
     
     func getType(){
-        
+
         while self.type == nil{
+            
             print("💬 What type of \(self.category!) do you want to order?")
             var tmpArray: [String] = []
             for index in 0..<self.data.category.count{
@@ -125,6 +130,7 @@ class Order{
                 self.type = tmpArray[Int(input!)!-1]
                 print("💬 You chose \(self.type!).")
                 self.getMenu()
+                break
                 
             } else {
                 print("⚠️ Please choose between 0 and \(tmpArray.count).")
@@ -135,14 +141,82 @@ class Order{
     func getMenu(){
         
         while self.menu == nil{
+            
             print("💬 Which \(self.type!) do you want?")
+            
             var tmpDic: [String:Int] = [:]
             var tmpArray: [String] = []
+            
             for index in 0..<self.data.drinkAndFood.count{
-                if self.type == self.data.drinkAndFood[index]{
+                if self.type! == self.data.drinkAndFood[index]{
                     tmpDic = self.data.drinkAndFoodArray[index]
                     tmpArray = tmpDic.keys.sorted()
+                }
+            }
+            for index in 0..<tmpArray.count-1{
+                print("\(index+1). \(tmpArray[index])", terminator: " | ")
+            }
+            print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | (0. Back, 99. Go First)")
+            let input: String? = readLine()
+            
+            if input == "0"{
+                self.type = nil
+                self.getType()
+                break
+                
+            } else if input == "99"{
+                self.hereOrTogo = nil
+                self.category = nil
+                self.type = nil
+                self.getHereOrTogo()
+                break
+                
+            } else if Int(input!)! >= 1 && Int(input!)! <= tmpArray.count{
+                self.menu = tmpArray[Int(input!)!-1]
+                print("💬 You chose \(self.menu!).")
+                self.getHotOrIce()
+                break
+
+            } else {
+                print("⚠️ Please choose between 0 and \(tmpArray.count).")
+            }
+        }
+    }
+        
+    func getHotOrIce(){
+
+    loop1: while self.hotOrIced == nil{
+            
+            if self.data.hotOnlyMenu.contains(self.menu!){
+                self.hotOrIced = "Hot"
+                print("💬 \(self.menu!) is served only Hot")
+                self.getSize()
+                break
+                
+            } else if self.data.icedOnlyMenu.contains(self.menu!){
+                self.hotOrIced = "Iced"
+                print("💬 \(self.menu!) is served only Iced")
+                self.getSize()
+                break
+                
+            } else if self.data.rtd.keys.contains(self.menu!){
+                self.hotOrIced = "None"
+                print("💬 \(self.menu!) is served chilled.")
+                self.getSize()
+                break
+                
+            } else if self.data.food.contains(self.type!){
+                self.hotOrIced = "None"
+                print("💬 \(self.menu!) has no choice for temperature.")
+                self.getSize()
+                break
+                
+            } else {
+            loop2: while true{
+                
+                    print("💬 Would you like your \(self.menu!) served Hot or Iced?")
                     
+                    let tmpArray: [String] = self.data.hotOrIced
                     for index in 0..<tmpArray.count-1{
                         print("\(index+1). \(tmpArray[index])", terminator: " | ")
                     }
@@ -150,22 +224,24 @@ class Order{
                     let input: String? = readLine()
                     
                     if input == "0"{
-                        self.type = nil
-                        self.getType()
-                        break
+                        self.menu = nil
+                        self.getMenu()
+                        break loop1
                         
                     } else if input == "99"{
                         self.hereOrTogo = nil
                         self.category = nil
                         self.type = nil
+                        self.menu = nil
                         self.getHereOrTogo()
-                        break
+                        break loop1
                         
                     } else if Int(input!)! >= 1 && Int(input!)! <= tmpArray.count{
-                        self.menu = tmpArray[Int(input!)!-1]
-                        print("💬 You chose \(self.menu!).")
-                        self.getHotOrIce()
-
+                        self.hotOrIced = tmpArray[Int(input!)!-1]
+                        print("💬 Your \(self.menu!) will be served \(self.hotOrIced!).")
+                        self.getSize()
+                        break loop1
+                        
                     } else {
                         print("⚠️ Please choose between 0 and \(tmpArray.count).")
                     }
@@ -173,73 +249,17 @@ class Order{
             }
         }
     }
-        
-    func getHotOrIce(){
-        
-        while self.hotOrIced == nil{
-            if self.data.hotOnlyMenu.contains(self.menu!){
-                self.hotOrIced = "Hot"
-                print("💬 \(self.menu!) is served only Hot")
-                self.getSize()
-                
-            } else if self.data.icedOnlyMenu.contains(self.menu!){
-                self.hotOrIced = "Iced"
-                print("💬 \(self.menu!) is served only Iced")
-                self.getSize()
-                
-            } else if self.data.rtd.keys.contains(self.menu!){
-                self.hotOrIced = "None"
-                print("💬 \(self.menu!) is served chilled.")
-                self.getSize()
-                
-            } else if self.data.food.contains(self.type!){
-                self.hotOrIced = "None"
-                print("💬 \(self.menu!) has no choice for temperature.")
-                self.getSize()
-                
-            } else {
-                print("💬 Would you like your \(self.menu!) served Hot or Iced?")
-                
-                let tmpArray: [String] = self.data.hotOrIced
-                for index in 0..<tmpArray.count-1{
-                    print("\(index+1). \(tmpArray[index])", terminator: " | ")
-                }
-                print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | (0. Back, 99. Go First)")
-                let input: String? = readLine()
-                
-                if input == "0"{
-                    self.menu = nil
-                    self.getMenu()
-                    break
-                    
-                } else if input == "99"{
-                    self.hereOrTogo = nil
-                    self.category = nil
-                    self.type = nil
-                    self.menu = nil
-                    self.getHereOrTogo()
-                    break
-                    
-                } else if Int(input!)! >= 1 && Int(input!)! <= tmpArray.count{
-                    self.hotOrIced = tmpArray[Int(input!)!-1]
-                    print("💬 Your \(self.menu!) will be served \(self.hotOrIced!).")
-                    self.getSize()
-                    
-                } else {
-                    print("⚠️ Please choose between 0 and \(tmpArray.count).")
-                }
-            }
-        }
-    }
             
             
     func getSize(){
+
+    loop1: while self.size == nil{
         
-        while self.size == nil{
             var tmpArray: [String] = []
             
             if self.data.espressoSizedMenu.contains(self.menu!){
                 tmpArray = self.data.sizeOfEspresso
+                
             } else if self.data.rtd.keys.contains(self.menu!) || self.menu! == "Malcha Shot Affogato" || self.data.food.contains(self.type!){
                 self.size = "None"
                 print("💬 \(self.menu!) has no choice for size.")
@@ -252,41 +272,47 @@ class Order{
             } else {
                 tmpArray = self.data.sizeOfIced
             }
-            print("💬 What size \(self.menu!) would you like?")
-            
-            for index in 0..<tmpArray.count-1{
-                print("\(index+1). \(tmpArray[index])", terminator: " | ")
-            }
-            print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | (0. Back, 99. Go First)")
-            let input: String? = readLine()
-            
-            if Int(input!) == 0{
-                self.menu = nil
-                self.getMenu()
-                break
+        
+    loop2: while true{
+                print("💬 What size \(self.menu!) would you like?")
                 
-            } else if input == "99"{
-                self.hereOrTogo = nil
-                self.category = nil
-                self.type = nil
-                self.menu = nil
-                self.hotOrIced = nil
-                self.getHereOrTogo()
-                break
+                for index in 0..<tmpArray.count-1{
+                    print("\(index+1). \(tmpArray[index])", terminator: " | ")
+                }
+                print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | (0. Back, 99. Go First)")
+                let input: String? = readLine()
                 
-            } else if Int(input!)! >= 1 && Int(input!)! <= tmpArray.count{
-                self.size = tmpArray[Int(input!)!-1]
-                print("💬 You chose \(self.size!) size.")
-                self.getOption()
-                
-            } else {
-                print("⚠️ Please choose between 0 and \(tmpArray.count).")
+                if input == "0"{
+                    self.menu = nil
+                    self.getMenu()
+                    break loop1
+                    
+                } else if input == "99"{
+                    self.hereOrTogo = nil
+                    self.category = nil
+                    self.type = nil
+                    self.menu = nil
+                    self.hotOrIced = nil
+                    self.getHereOrTogo()
+                    break loop1
+                    
+                } else if Int(input!)! >= 1 && Int(input!)! <= tmpArray.count{
+                    self.size = tmpArray[Int(input!)!-1]
+                    print("💬 You chose \(self.size!) size.")
+                    self.getOption()
+                    break loop1
+                    
+                } else {
+                    print("⚠️ Please choose between 0 and \(tmpArray.count).")
+                }
             }
         }
     }
             
-    func getOption(){ 
-    loop1: while true{
+    func getOption(){
+        
+    loop1: while self.option == nil{
+        
             if self.data.drink.contains(self.type!){
                 var tmpArray: [String] = []
                 
@@ -305,88 +331,88 @@ class Order{
                 }
 
             loop2: while true{
-                print("💬 Which option would you like to add to your \(self.menu!)?")
-                for index in 0..<tmpArray.count-1{
-                    print("\(index+1). \(tmpArray[index])", terminator: " | ")
-                }
-                print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | \(tmpArray.count+1). No Option | (0. Back, 99. Go First)")
-                let input1: String? = readLine()
-                
-                if input1 == "0"{
-                    self.size = nil
-                    self.getSize()
-                    break loop1
-                    
-                } else if input1 == "99"{
-                    self.hereOrTogo = nil
-                    self.category = nil
-                    self.type = nil
-                    self.menu = nil
-                    self.hotOrIced = nil
-                    self.size = nil
-                    self.getHereOrTogo()
-                    break loop1
-                    
-                } else if Int(input1!) == tmpArray.count+1{
-                    self.getNumber()
-                    break loop1
-                    
-                } else if self.hotOrIced == "Iced" && Int(input1!) == 3{
-                    self.option?.updateValue(1, forKey: "moreIce")
-                    
-                loop3: while true{
-                        print("💬 More ice is served. Do you want more option?")
-                        print("1. Yes | 2. No")
-                        let input2: String? = readLine()
-                        
-                        if input2 == "1"{
-                            break loop3
-                            
-                        } else if input2 == "2"{
-                            self.getNumber()
-                            break loop1
-                            
-                        } else {
-                            print("⚠️ Please choose between 0 and 2.")
-                        }
+                    print("💬 Which option would you like to add to your \(self.menu!)?")
+                    for index in 0..<tmpArray.count-1{
+                        print("\(index+1). \(tmpArray[index])", terminator: " | ")
                     }
+                    print("\(tmpArray.count). \(tmpArray[tmpArray.count-1]) | \(tmpArray.count+1). No Option | (0. Back, 99. Go First)")
+                    let input1: String? = readLine()
                     
-                } else if Int(input1!)! < 1 || Int(input1!)! > tmpArray.count+1{
-                    print("⚠️ Please choose between 0 and \(tmpArray.count+1).")
-                    
-                } else {
-                    
-                loop4: while true{
-                        print("💬 How many? You can add 1 to 9 times.")
-                        let input3: String? = readLine()
+                    if input1 == "0"{
+                        self.size = nil
+                        self.getSize()
+                        break loop1
                         
-                        if Int(input3!)! >= 1 && Int(input3!)! <= 9{
-                            self.option!.updateValue(Int(input3!)!, forKey: tmpArray[Int(input1!)!-1])
-                            print("💬 \(Int(input3!)!) times \(tmpArray[Int(input1!)!-1]) is served. Do you want more option?")
+                    } else if input1 == "99"{
+                        self.hereOrTogo = nil
+                        self.category = nil
+                        self.type = nil
+                        self.menu = nil
+                        self.hotOrIced = nil
+                        self.size = nil
+                        self.getHereOrTogo()
+                        break loop1
+                        
+                    } else if Int(input1!) == tmpArray.count+1{
+                        self.getNumber()
+                        break loop1
+                        
+                    } else if self.hotOrIced == "Iced" && Int(input1!) == 3{
+                        self.option!.updateValue(1, forKey: "moreIce")
+                        
+                    loop3: while true{
+                            print("💬 More ice is served. Do you want more option?")
                             print("1. Yes | 2. No")
-                            let input4: String? = readLine()
+                            let input2: String? = readLine()
                             
-                            if input4 == "1"{
-                                break loop4
+                            if input2 == "1"{
+                                break loop3
                                 
-                            } else if input4 == "2"{
+                            } else if input2 == "2"{
                                 self.getNumber()
                                 break loop1
                                 
                             } else {
-                                print("⚠️ Please choose between 1 and 2.")
+                                print("⚠️ Please choose between 0 and 2.")
                             }
+                        }
                         
-                        } else {
-                            print("⚠️ Please choose between 0 and 9.")
+                    } else if Int(input1!)! < 1 || Int(input1!)! > tmpArray.count+1{
+                        print("⚠️ Please choose between 0 and \(tmpArray.count+1).")
+                        
+                    } else {
+                        
+                    loop4: while true{
+                            print("💬 How many? You can add 1 to 9 times.")
+                            let input3: String? = readLine()
+                            
+                            if Int(input3!)! >= 1 && Int(input3!)! <= 9{
+                                self.option!.updateValue(Int(input3!)!, forKey: tmpArray[Int(input1!)!-1])
+                                print("💬 \(Int(input3!)!) times \(tmpArray[Int(input1!)!-1]) is served. Do you want more option?")
+                                print("1. Yes | 2. No")
+                                let input4: String? = readLine()
+                                
+                                if input4 == "1"{
+                                    break loop4
+                                    
+                                } else if input4 == "2"{
+                                    self.getNumber()
+                                    break loop1
+                                    
+                                } else {
+                                    print("⚠️ Please choose between 1 and 2.")
+                                }
+                            
+                            } else {
+                                print("⚠️ Please choose between 0 and 9.")
+                            }
                         }
                     }
-                    
                 }
-            }
+                
             } else if self.data.bread.keys.contains(self.menu!) || self.data.sandwichSalad.keys.contains(self.menu!){
             
-                loop5: while true{
+            loop5: while true{
                     print("💬 Do you want me to heat up your \(self.menu!)?")
                     print("1. Yes | 2. No | (0. Back, 99. Go First)")
                     let input5: String? = readLine()
@@ -422,6 +448,7 @@ class Order{
                         print("⚠️ Please choose between 0 and 2.")
                     }
                 }
+                
             } else {
                 
                 self.option = ["None":0]
@@ -433,7 +460,9 @@ class Order{
     }
     
     func getNumber(){
+        
         while self.number == nil{
+            
             print("💬 How many would you like to order?")
             print("You can order under 10. (0. Back, 99. Go First)")
             let input: String? = readLine()
@@ -467,6 +496,7 @@ class Order{
     }
     
     func putOrderInfo(){
+        
     loop1: while true{
             print("💬 Shall I put your order into cart?")
             print("1. Yes | (0. Back, 99. Go First)")
@@ -492,7 +522,6 @@ class Order{
             } else if input1 == "1"{
                 
                 self.cart!.getOrderInfo()
-                self.cart!.addOrder()
                 
                 self.category = nil
                 self.type = nil
@@ -508,13 +537,6 @@ class Order{
                     let input2: String? = readLine()
                     
                     if input2 == "1"{
-//                        self.category = nil
-//                        self.type = nil
-//                        self.menu = nil
-//                        self.hotOrIced = nil
-//                        self.size = nil
-//                        self.option = nil
-//                        self.number = nil
                         self.getCategory()
                         break loop1
                         
@@ -530,9 +552,7 @@ class Order{
             } else {
                 print("⚠️ Please choose between 0 and 1 or 99.")
             }
-
         }
-   
     }
 }
 //==============================================================================

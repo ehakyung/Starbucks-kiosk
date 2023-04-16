@@ -25,6 +25,8 @@ class Cart{
         self.hereOrTogo = self.order.hereOrTogo
 //        self.hereOrTogo = self.order.hereOrTogo
         self.orderInfo = (self.order.category, self.order.menu, self.order.hotOrIced, self.order.size, self.order.option, self.order.number)
+        
+        self.addOrder()
     }
     
     func addOrder(){
@@ -33,6 +35,7 @@ class Cart{
     
     func showOrderList(){
         print("[\(self.hereOrTogo!)]")
+        
         if self.orderList.count != 0{
             for index in 0..<self.orderList.count{
                 
@@ -43,7 +46,7 @@ class Cart{
                     for (_, value) in self.orderList[index].4!{
                         if value == 1 {
                             print("heated")
-                        } else{
+                        } else {
                             print("")
                         }
                     }
@@ -76,17 +79,15 @@ class Cart{
             
             if input1 == "0"{
                 self.order.getCategory()
-//                self.order.getCategory()
                 break loop1
                 
             } else if input1 == "1"{
             loop2: while true{
                     print("💬 Delete or Change number?")
                     print("1. Delete | 2. Change number | (0. Back)")
-                    var input2: String? = readLine()
+                    let input2: String? = readLine()
                     
                     if input2 == "0"{
-                        input2 = nil
                         break loop2
                     } else if input2 == "1"{
                         self.deleteOrder()
@@ -102,6 +103,7 @@ class Cart{
             } else if input1 == "2"{
                 print("계산하기")
                 break loop1
+                
             } else {
                 print("⚠️ Please choose between 0 and 2.")
             }
