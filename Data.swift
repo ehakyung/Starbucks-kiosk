@@ -11,8 +11,6 @@ class Data{
     
     let hereOrTogo: [String]
     let category: [String]
-//    let menu: [String]
-    
     let categoryArray: [[String]]
     
     let drink: [String]
@@ -49,9 +47,13 @@ class Data{
     var icedOnlyMenu: [String]
     let hotOnlyMenu: [String]
     let hotOrIced: [String]
+    
     let sizeOfHot: [String]
     let sizeOfIced: [String]
     let sizeOfEspresso: [String]
+    
+    let priceOfsize: [String:Int]
+    
     let espressoSizedMenu: [String]
     
     let optionOfHotDrink: [String:Int]
@@ -368,22 +370,6 @@ class Data{
         
         self.icedOnlyMenu = ["Iced Brown Sugar Oat Shaken Espresso", "Coffee Starbucks Double Shot", "Vanilla Starbucks Double Shot", "Hazelnut Starbucks Double Shot", "Pink Flower Youthberry Tea", "Malcha Shot Affogato", "Iced Coffee", "Spring Strawberry Milk", "Vanilla Affogato", "Chocolate Affocato", "Java Chip Vanilla Affogato", "Java Chip Chocolate Affogato", "Milk", "Red Power Smasher", "Starbuck Slammer"]
         
-
-//        for (key, _) in self.refreshers{
-//            self.icedOnlyMenu.append(key)
-//        }
-//        for (key, _) in self.coldBrew{
-//            self.icedOnlyMenu.append(key)
-//        }
-//        for (key, _) in self.frappuccino{
-//            self.icedOnlyMenu.append(key)
-//        }
-//        for (key, _) in self.blended{
-//            self.icedOnlyMenu.append(key)
-//        }
-//        for (key, _) in self.fizzio{
-//            self.icedOnlyMenu.append(key)
-//        }
         self.icedOnlyMenu += self.refreshers.keys
         self.icedOnlyMenu += self.coldBrew.keys
         self.icedOnlyMenu += self.frappuccino.keys
@@ -397,6 +383,7 @@ class Data{
         self.sizeOfHot = ["Short", "Tall", "Grande", "Venti"]
         self.sizeOfIced = ["Tall", "Grande", "Venti"]
         self.sizeOfEspresso = ["Solo", "Doppio"]
+        self.priceOfsize = ["Short":-500, "Tall":0, "Grande":500, "Venti":1000, "Solo":0, "Doppio":500]
         
         self.espressoSizedMenu = ["Espresso", "Espresso Macchiato", "Espresso Con Panna"]
         
