@@ -55,6 +55,7 @@ class Data{
     let priceOfsize: [String:Int]
     
     let espressoSizedMenu: [String]
+    let noneSizedDrink: [String]
     
     let optionOfHotDrink: [String:Int]
     let optionOfIcedDrink: [String:Int]
@@ -63,18 +64,11 @@ class Data{
     init(){
         self.hereOrTogo = ["Here", "To-go"]
         self.category = ["Drink", "Food"]
-        
-//        self.category = ["Drink", "Food", "MD(merchandise)"]
 
         self.drink = ["Refreshers", "Cold Brew", "Blonde Coffee", "Espresso", "Decaf Coffee", "Frappuccino", "Blended", "Fizzio", "Teavana", "Brewed Coffee", "Others", "RTD"]
         self.food = ["Bread", "Cake&Mini Dessert", "Sandwich&Salad", "Hot Food", "Fruit&Yogurt", "Snack", "Ice Cream"]
-        
         self.drinkAndFood = self.drink + self.food
-        
-//        self.md = ["Mug&Glass", "Tumbler", "ACC", "Brewing Item", "Whole Bean", "VIA", "Capsule", "Packaged Tea", "Syrup"]
-        
         self.categoryArray = [self.drink, self.food]
-//        self.categoryArray = [self.drink, self.food, self.md]
 
         self.refreshers = ["Strawberry Acai with Lemonade Refresher":5900,
                            "Pink Drink with Strawberry Acai Refresher":5900] //iced only(all)
@@ -366,10 +360,7 @@ class Data{
         
         self.drinkAndFoodArray = [self.refreshers, self.coldBrew, self.blondeCoffee, self.espresso, self.decafCoffee, self.frappuccino, self.blended, self.fizzio, self.teavana, self.brewedCoffee, self.others, self.rtd, self.bread, self.cakeMiniDessert, self.sandwichSalad, self.hotFood, self.fruitYogurt, self.snack, self.iceCream]
         
-   
-        
         self.icedOnlyMenu = ["Iced Brown Sugar Oat Shaken Espresso", "Coffee Starbucks Double Shot", "Vanilla Starbucks Double Shot", "Hazelnut Starbucks Double Shot", "Pink Flower Youthberry Tea", "Malcha Shot Affogato", "Iced Coffee", "Spring Strawberry Milk", "Vanilla Affogato", "Chocolate Affocato", "Java Chip Vanilla Affogato", "Java Chip Chocolate Affogato", "Milk", "Red Power Smasher", "Starbuck Slammer"]
-        
         self.icedOnlyMenu += self.refreshers.keys
         self.icedOnlyMenu += self.coldBrew.keys
         self.icedOnlyMenu += self.frappuccino.keys
@@ -386,17 +377,10 @@ class Data{
         self.priceOfsize = ["Short":-500, "Tall":0, "Grande":500, "Venti":1000, "Solo":0, "Doppio":500]
         
         self.espressoSizedMenu = ["Espresso", "Espresso Macchiato", "Espresso Con Panna"]
+        self.noneSizedDrink = ["Malcha Shot Affogato", "Vanilla Affogato", "Chocolate Affocato", "Java Chip Vanilla Affogato", "Java Chip Chocolate Affogato"]
         
         self.optionOfHotDrink = ["addEspresso":600, "addSyrup":600, "withWhip":600, "withDrizzle":600]
         self.optionOfIcedDrink = ["addEspresso":600, "addSyrup":600, "moreIce":0, "withWhip":600, "withDrizzle":600]
         self.optionOfBreadAndSandwich = ["warm":0]
-//        enum HereOrTogo: String{
-//            case here = "1"
-//            case togo = "2"
-//        let category = ["Drink", "Food", "MD"]
-//        let drink = ["Coffee", "Beverge", "Blending Tea", "Flatccino", "Shake/Ade", "Ice Flakes", "RTD", "Season Drink" ]
-//        let food = ["Bread", "Dessert", "Deli", "RTE", "Season Food"
-//        ]
-
     }
 }
